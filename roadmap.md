@@ -1,0 +1,5 @@
+- [ ] Bring the uploaded TALK OF storefront into the project while preserving its visual design.
+- [ ] Fix URL-synced shop filters, size selection, quick view, header search, and product tags.
+- [ ] Correct WhatsApp item pricing and add the requested footer links and metadata cleanup.
+- [ ] Convert every storefront image to WebP and update image references.
+- [ ] Verify routes, interactions, tests, and preview; update the migration ledger and commit.

@@ -1,0 +1,13 @@
+{
+  "source": "code-archive",
+  "capabilities": [
+    { "capability": "application code and routes", "source": "uploaded TALK OF storefront archive", "outcome": "migrate", "status": "pending", "next_action": "Apply the requested fixes and verify the storefront." },
+    { "capability": "catalog demo data and shopping bag", "source": "bundled TypeScript catalog and browser storage", "outcome": "migrate", "status": "pending", "next_action": "Preserve the shared catalog and local bag behavior." },
+    { "capability": "uploaded image bytes", "source": "public/images in the uploaded archive", "outcome": "migrate", "status": "pending", "next_action": "Convert images to WebP and update storefront references." },
+    { "capability": "database schema and records", "source": "none detected", "outcome": "none", "status": "verified", "next_action": "None." },
+    { "capability": "authentication and authorization", "source": "none detected", "outcome": "none", "status": "verified", "next_action": "None." },
+    { "capability": "external services", "source": "Instagram and WhatsApp links", "outcome": "preserve", "status": "pending", "next_action": "Keep existing external links and enquiry behavior." },
+    { "capability": "public endpoints, callbacks, webhooks, schedules, and secrets", "source": "none detected", "outcome": "none", "status": "verified", "next_action": "None." },
+    { "capability": "cutover and end-to-end verification", "source": "uploaded static storefront", "outcome": "verify", "status": "pending", "next_action": "Run tests and check the preview interactions." }
+  ]
+}
