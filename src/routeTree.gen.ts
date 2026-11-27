@@ -11,8 +11,21 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as WishlistRouteImport } from './routes/wishlist'
+import { Route as AdminPanelRouteRouteImport } from './routes/admin/_panel/route'
+import { Route as AdminForgotPasswordRouteImport } from './routes/admin/forgot-password'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminResetPasswordRouteImport } from './routes/admin/reset-password'
 import { Route as ProductsIdRouteImport } from './routes/products.$id'
+import { Route as AdminPanelIndexRouteImport } from './routes/admin/_panel/index'
+import { Route as AdminPanelDashboardRouteImport } from './routes/admin/_panel/dashboard'
+import { Route as AdminPanelOrdersRouteImport } from './routes/admin/_panel/orders'
+import { Route as AdminPanelProductsRouteImport } from './routes/admin/_panel/products'
+import { Route as AdminPanelSiteContentRouteImport } from './routes/admin/_panel/site-content'
+import { Route as AdminPanelStaffRouteImport } from './routes/admin/_panel/staff'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -24,9 +37,44 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPanelRouteRoute = AdminPanelRouteRouteImport.update({
+  id: '/admin/_panel',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminForgotPasswordRoute = AdminForgotPasswordRouteImport.update({
+  id: '/admin/forgot-password',
+  path: '/admin/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminResetPasswordRoute = AdminResetPasswordRouteImport.update({
+  id: '/admin/reset-password',
+  path: '/admin/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsIdRoute = ProductsIdRouteImport.update({
@@ -34,38 +82,164 @@ const ProductsIdRoute = ProductsIdRouteImport.update({
   path: '/products/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPanelIndexRoute = AdminPanelIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminPanelRouteRoute,
+} as any)
+const AdminPanelDashboardRoute = AdminPanelDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminPanelRouteRoute,
+} as any)
+const AdminPanelOrdersRoute = AdminPanelOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AdminPanelRouteRoute,
+} as any)
+const AdminPanelProductsRoute = AdminPanelProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => AdminPanelRouteRoute,
+} as any)
+const AdminPanelSiteContentRoute = AdminPanelSiteContentRouteImport.update({
+  id: '/site-content',
+  path: '/site-content',
+  getParentRoute: () => AdminPanelRouteRoute,
+} as any)
+const AdminPanelStaffRoute = AdminPanelStaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
+  getParentRoute: () => AdminPanelRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/shop': typeof ShopRoute
+  '/wishlist': typeof WishlistRoute
+  '/admin': typeof AdminPanelRouteRouteWithChildren
+  '/admin/forgot-password': typeof AdminForgotPasswordRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/reset-password': typeof AdminResetPasswordRoute
   '/products/$id': typeof ProductsIdRoute
+  '/admin/dashboard': typeof AdminPanelDashboardRoute
+  '/admin/orders': typeof AdminPanelOrdersRoute
+  '/admin/products': typeof AdminPanelProductsRoute
+  '/admin/site-content': typeof AdminPanelSiteContentRoute
+  '/admin/staff': typeof AdminPanelStaffRoute
+  '/admin/': typeof AdminPanelIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/shop': typeof ShopRoute
+  '/wishlist': typeof WishlistRoute
+  '/admin/forgot-password': typeof AdminForgotPasswordRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/reset-password': typeof AdminResetPasswordRoute
   '/products/$id': typeof ProductsIdRoute
+  '/admin/dashboard': typeof AdminPanelDashboardRoute
+  '/admin/orders': typeof AdminPanelOrdersRoute
+  '/admin/products': typeof AdminPanelProductsRoute
+  '/admin/site-content': typeof AdminPanelSiteContentRoute
+  '/admin/staff': typeof AdminPanelStaffRoute
+  '/admin': typeof AdminPanelIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/shop': typeof ShopRoute
+  '/wishlist': typeof WishlistRoute
+  '/admin/_panel': typeof AdminPanelRouteRouteWithChildren
+  '/admin/forgot-password': typeof AdminForgotPasswordRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/reset-password': typeof AdminResetPasswordRoute
   '/products/$id': typeof ProductsIdRoute
+  '/admin/_panel/dashboard': typeof AdminPanelDashboardRoute
+  '/admin/_panel/orders': typeof AdminPanelOrdersRoute
+  '/admin/_panel/products': typeof AdminPanelProductsRoute
+  '/admin/_panel/site-content': typeof AdminPanelSiteContentRoute
+  '/admin/_panel/staff': typeof AdminPanelStaffRoute
+  '/admin/_panel/': typeof AdminPanelIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/shop' | '/products/$id'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/login'
+    | '/shop'
+    | '/wishlist'
+    | '/admin'
+    | '/admin/forgot-password'
+    | '/admin/login'
+    | '/admin/reset-password'
+    | '/products/$id'
+    | '/admin/dashboard'
+    | '/admin/orders'
+    | '/admin/products'
+    | '/admin/site-content'
+    | '/admin/staff'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/shop' | '/products/$id'
-  id: '__root__' | '/' | '/about' | '/shop' | '/products/$id'
+  to:
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/login'
+    | '/shop'
+    | '/wishlist'
+    | '/admin/forgot-password'
+    | '/admin/login'
+    | '/admin/reset-password'
+    | '/products/$id'
+    | '/admin/dashboard'
+    | '/admin/orders'
+    | '/admin/products'
+    | '/admin/site-content'
+    | '/admin/staff'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/login'
+    | '/shop'
+    | '/wishlist'
+    | '/admin/_panel'
+    | '/admin/forgot-password'
+    | '/admin/login'
+    | '/admin/reset-password'
+    | '/products/$id'
+    | '/admin/_panel/dashboard'
+    | '/admin/_panel/orders'
+    | '/admin/_panel/products'
+    | '/admin/_panel/site-content'
+    | '/admin/_panel/staff'
+    | '/admin/_panel/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  DashboardRoute: typeof DashboardRoute
+  LoginRoute: typeof LoginRoute
   ShopRoute: typeof ShopRoute
+  WishlistRoute: typeof WishlistRoute
+  AdminPanelRouteRoute: typeof AdminPanelRouteRouteWithChildren
+  AdminForgotPasswordRoute: typeof AdminForgotPasswordRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminResetPasswordRoute: typeof AdminResetPasswordRoute
   ProductsIdRoute: typeof ProductsIdRoute
 }
 
@@ -85,11 +259,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/_panel': {
+      id: '/admin/_panel'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminPanelRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/forgot-password': {
+      id: '/admin/forgot-password'
+      path: '/admin/forgot-password'
+      fullPath: '/admin/forgot-password'
+      preLoaderRoute: typeof AdminForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/reset-password': {
+      id: '/admin/reset-password'
+      path: '/admin/reset-password'
+      fullPath: '/admin/reset-password'
+      preLoaderRoute: typeof AdminResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/$id': {
@@ -99,13 +322,84 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/_panel/': {
+      id: '/admin/_panel/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminPanelIndexRouteImport
+      parentRoute: typeof AdminPanelRouteRoute
+    }
+    '/admin/_panel/dashboard': {
+      id: '/admin/_panel/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminPanelDashboardRouteImport
+      parentRoute: typeof AdminPanelRouteRoute
+    }
+    '/admin/_panel/orders': {
+      id: '/admin/_panel/orders'
+      path: '/orders'
+      fullPath: '/admin/orders'
+      preLoaderRoute: typeof AdminPanelOrdersRouteImport
+      parentRoute: typeof AdminPanelRouteRoute
+    }
+    '/admin/_panel/products': {
+      id: '/admin/_panel/products'
+      path: '/products'
+      fullPath: '/admin/products'
+      preLoaderRoute: typeof AdminPanelProductsRouteImport
+      parentRoute: typeof AdminPanelRouteRoute
+    }
+    '/admin/_panel/site-content': {
+      id: '/admin/_panel/site-content'
+      path: '/site-content'
+      fullPath: '/admin/site-content'
+      preLoaderRoute: typeof AdminPanelSiteContentRouteImport
+      parentRoute: typeof AdminPanelRouteRoute
+    }
+    '/admin/_panel/staff': {
+      id: '/admin/_panel/staff'
+      path: '/staff'
+      fullPath: '/admin/staff'
+      preLoaderRoute: typeof AdminPanelStaffRouteImport
+      parentRoute: typeof AdminPanelRouteRoute
+    }
   }
 }
+
+interface AdminPanelRouteRouteChildren {
+  AdminPanelDashboardRoute: typeof AdminPanelDashboardRoute
+  AdminPanelOrdersRoute: typeof AdminPanelOrdersRoute
+  AdminPanelProductsRoute: typeof AdminPanelProductsRoute
+  AdminPanelSiteContentRoute: typeof AdminPanelSiteContentRoute
+  AdminPanelStaffRoute: typeof AdminPanelStaffRoute
+  AdminPanelIndexRoute: typeof AdminPanelIndexRoute
+}
+
+const AdminPanelRouteRouteChildren: AdminPanelRouteRouteChildren = {
+  AdminPanelDashboardRoute: AdminPanelDashboardRoute,
+  AdminPanelOrdersRoute: AdminPanelOrdersRoute,
+  AdminPanelProductsRoute: AdminPanelProductsRoute,
+  AdminPanelSiteContentRoute: AdminPanelSiteContentRoute,
+  AdminPanelStaffRoute: AdminPanelStaffRoute,
+  AdminPanelIndexRoute: AdminPanelIndexRoute,
+}
+
+const AdminPanelRouteRouteWithChildren = AdminPanelRouteRoute._addFileChildren(
+  AdminPanelRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  DashboardRoute: DashboardRoute,
+  LoginRoute: LoginRoute,
   ShopRoute: ShopRoute,
+  WishlistRoute: WishlistRoute,
+  AdminPanelRouteRoute: AdminPanelRouteRouteWithChildren,
+  AdminForgotPasswordRoute: AdminForgotPasswordRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminResetPasswordRoute: AdminResetPasswordRoute,
   ProductsIdRoute: ProductsIdRoute,
 }
 export const routeTree = rootRouteImport

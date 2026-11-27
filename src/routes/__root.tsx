@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -13,7 +14,9 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BagProvider } from "@/context/bag-context";
-import { SiteFooter, SiteHeader } from "@/components/storefront";
+import { WishlistProvider } from "@/context/wishlist-context";
+import { SiteFooter, SiteHeader, WhatsAppButton } from "@/components/storefront";
+import { SITE_SETTINGS_KEY, fetchSiteSettings } from "@/lib/site-settings-api";
 
 function NotFoundComponent() {
   return (
@@ -76,6 +79,13 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  // Editable site content (hero, announcement, WhatsApp). fetchSiteSettings never throws; it falls back to defaults.
+  loader: ({ context }) =>
+    context.queryClient.ensureQueryData({
+      queryKey: SITE_SETTINGS_KEY,
+      queryFn: fetchSiteSettings,
+      staleTime: 60_000,
+    }),
   head: () => ({
     // Replace these placeholders with the app's name and description when first building the app.
     // Each content route, / included, must still set its own head(). Never add og:image or
@@ -86,19 +96,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "TALK OF — Streetwear That Speaks" },
       { name: "description", content: "Bold, vintage-inspired streetwear in Nairobi, Kenya." },
       { property: "og:title", content: "TALK OF — Streetwear That Speaks" },
-      { property: "og:description", content: "Bold, vintage-inspired streetwear in Nairobi, Kenya." },
+      {
+        property: "og:description",
+        content: "Bold, vintage-inspired streetwear in Nairobi, Kenya.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg", sizes: "any" },
+      { rel: "icon", type: "image/png", href: "/favicon-192.png", sizes: "192x192" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -123,14 +142,29 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // The admin area has its own layout; the storefront header, footer and WhatsApp button stay public-only.
+  const isAdmin = useRouterState({
+    select: (s) => s.location.pathname === "/admin" || s.location.pathname.startsWith("/admin/"),
+  });
+
+  if (isAdmin) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <Outlet />
+      </QueryClientProvider>
+    );
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
       <BagProvider>
-        <SiteHeader />
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-        <SiteFooter />
+        <WishlistProvider>
+          <SiteHeader />
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <SiteFooter />
+          <WhatsAppButton />
+        </WishlistProvider>
       </BagProvider>
     </QueryClientProvider>
   );

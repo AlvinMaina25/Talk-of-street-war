@@ -1,4 +1,5 @@
 <!-- LOVABLE:BEGIN -->
+
 > [!IMPORTANT]
 > This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
 > published git history — force pushing, or rebasing/amending/squashing commits
@@ -27,7 +28,17 @@ use the editor.
   `LOVABLE_API_KEY`. When Lovable does not provide one, users can bring their
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
+
 <!-- LOVABLE:END -->
 
-## Storefront architecture
-- Keep the catalog centralized in a shared TypeScript module and shopping state in one client provider so every route uses the same demo products and bag contents.
+## Project rules
+
+- Admin lives under `src/routes/admin/`: public auth pages (`login`, `forgot-password`, `reset-password`) sit beside the pathless `_panel` layout, whose client-only `beforeLoad` gates every other admin page. Why: the session is in browser storage, so the server cannot gate during SSR.
+- Admin section visibility comes from `SECTION_ACCESS` in `src/lib/admin-access.ts`; each `_panel` child re-checks it in `beforeLoad`. Why: one source for sidebar and route guards.
+- Roles live only in `public.user_roles` and are checked with `public.has_role()`; owner bootstrap is `public.claim_owner_role()` reading the verified email from `auth.users`. Why: never trust profile or client-supplied role data.
+- `__root.tsx` skips the storefront header/footer/WhatsApp button on `/admin*`. Why: admin has its own layout and must not alter the storefront.
+- Staff management is owner-only and runs through server functions in `src/lib/staff.functions.ts` (service role stays server-side; they verify the caller with `requireSupabaseAuth` + `has_role(owner)` first). The UI lists staff via the owner-only `list_staff()` RPC. Why: auth emails and role writes must never be reachable from the browser.
+- Deactivating staff sets `user_roles.is_active = false` (and bans the auth user); `has_role()` ignores inactive rows, so every RLS policy blocks them at once. The owner role can't be changed, removed or deactivated (server functions + `protect_owner_role` trigger). Why: the owner must never be lockable out.
+- `activity_log` is written only by triggers (products, stock, orders) and is read-only for staff. Why: an audit trail nobody can edit through the API.
+- One `<Toaster />` lives in `src/routes/admin/_panel/route.tsx`; don't mount another in admin pages.
+- SQL run order: products, stock, orders, site-settings, admin-staff-activity setup files; then `rls-check.sql` to verify every role.
